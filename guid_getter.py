@@ -9,7 +9,7 @@ username = getpass("what is your NDA username?:")
 password = getpass("What is your NDA password?:")
 
 guidlist=list(pd.read_csv('ndar_sample.csv',sep=' '))
-
+links=pd.DataFrame(columns=['slinks'])
 for guid in guidlist:
 	print(str(guid))
 	gui=str(guid)
@@ -18,7 +18,6 @@ for guid in guidlist:
 	headers={'Accept': 'application/json'})
 	guid_data = json.loads(r.text)
 	
-# 
 	experiments = []
 	ages = []
 	for age in guid_data['age']:
@@ -31,7 +30,6 @@ for guid in guidlist:
 						
 	for experiment in experiments:
 		query=str(experiment)
-		print(query)
 		r = requests.get("https://ndar.nih.gov/api/experiment/{}".format(query),
 		headers={'Accept':'application/json'})
         
@@ -48,5 +46,8 @@ for guid in guidlist:
 					ages.append(age_value)
 	guid_list = []
 	for i,image in enumerate(image_files):
-		print("age:{}, url:{}".format(ages[i],image))
+		#print("age:{}, url:{}".format(ages[i],image))
 		guid_list.append(image)
+	links=links.append({'slinks' : image},ignore_index=True)
+
+links.to_csv(r'./slinks.csv', header=False, index=False, sep=' ')
