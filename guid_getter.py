@@ -1,4 +1,16 @@
-## Quick update for GUIDS: Iterate through a csv list of ndar files to get S3 links 
+## Purpose: Get slinks from NDA from known GUIDs. 
+# Output is csv file, "slinks.csv" with links to imaging data
+
+# last update 3/20/19 by R. Waugh
+
+## Pre-requisites 
+# 1. NDA username and password
+# 2. Install nda_aws_token_generator
+# git clone https://github.com/NDAR/nda_aws_token_generator.git
+# List of GUIDs (default is ndar_sample.csv for testing purposes)
+
+# User adds GUID file
+filename='ndar_sample.csv'
 
 import requests
 import json
